@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "US 2FA Autofill",
+    "description": "Rellena el código de 2FA en los sitios de la US",
+    "version": "3.0",
+    "icons": {
+        "16": "images/USAutofill_16.png",
+        "128": "images/USAutofill_128.png"
+    },
+    "action": {
+      "default_popup": "autofill.html",
+      "default_icon": "images/USAutofill_128.png"
+    },
+    "permissions": [
+      "activeTab",
+      "tabs",
+      "scripting",
+      "storage"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://sso.us.es/*"
+        ],
+        "js": [
+          "scripts/scripts.js"
+        ]
+      }
+    ]
+  }

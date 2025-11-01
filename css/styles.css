@@ -1,0 +1,57 @@
+html {
+    width: 400px;
+    max-width: 400px;
+}
+
+.bg-us {
+    background-color: #be0f2e;
+}
+
+.border-us {
+    border: 3px solid #be0f2e;
+}
+
+.copy {
+    font-size: 36px;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+}
+
+.counter {
+    text-align: center;
+    background-color: #be0f2e;
+    font-size: 24px;
+    color: #ffffff;
+    border-radius: px;
+}
+
+input {
+    width: 100%;
+    margin: 8px 0;
+    padding: 6px 12px 6px 12px;
+    display: inline-block;
+    border: 1px solid #be0f2e;
+    border-radius: 4px;
+    background-color: #111;
+    margin-top: 20px;
+    caret-color: white;
+    color: white;
+    box-sizing: border-box;
+}
+
+#codigo2FA {
+    font-size: 48px;
+    padding: 0%;
+}
+
+#codigo2FA:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#reset:hover {
+    cursor: pointer;
+    background-color: #940f27;
+}
