@@ -5,7 +5,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ThemeToggle } from "./components/ThemeToggle";
 
 // eslint-disable-next-line no-undef
-const api = typeof browser !== "undefined" ? browser : chrome;
+const api = typeof browser !== "undefined" ? browser : (typeof chrome !== "undefined" ? chrome : null);
 
 const App = () => {
     const [secret, setSecret] = useState('');
