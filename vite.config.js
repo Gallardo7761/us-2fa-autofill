@@ -8,13 +8,9 @@ export default defineConfig({
     rollupOptions: {
       input: [
         resolve(__dirname, 'index.html'),
-        resolve(__dirname, 'src/content.js')
       ],
       output: {
         entryFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'content') {
-            return 'scripts/content.js';
-          }
           return 'assets/[name]-[hash].js';
         },
       },

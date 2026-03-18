@@ -4,10 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ThemeToggle } from "./components/ThemeToggle";
 
+// eslint-disable-next-line no-undef
+const api = typeof browser !== "undefined" ? browser : chrome;
+
 const App = () => {
-    const [secret, setSecret] = useState(localStorage.getItem('shasecret') || '');
+    const [secret, setSecret] = useState('');
     const [token, setToken] = useState('000000');
     const [remaining, setRemaining] = useState(30);
+
+    useEffect(() => {
+        if (api?.storage?.local) {
+            api.storage.local.get(['shasecret'], (result) => {
+                if (result.shasecret) {
+                    setSecret(result.shasecret);
+                }
+            });
+        }
+    }, []);
 
     useEffect(() => {
         if (!secret) return;
@@ -26,22 +39,15 @@ const App = () => {
                 const newToken = totp.generate()
                 setToken(newToken);
 
-                // eslint-disable-next-line no-undef
-                const api = typeof browser !== "undefined" ? browser : chrome;
-
-                if (api && api.tabs && api.tabs.query) {
+                if (api?.tabs?.query) {
                     api.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                        if (tabs[0]?.id && tabs[0].url?.includes("sso.us.es")) {
+                        if (tabs[0]?.url?.includes("sso.us.es")) {
                             api.tabs.sendMessage(tabs[0].id, {
                                 action: "autofill",
                                 code: newToken
-                            }).catch(() => {
-                                console.log("Esperando inyección...");
-                            });
+                            }).catch(() => {});
                         }
                     });
-                } else {
-                    console.log("Entorno de desarrollo: Autofill desactivado.");
                 }
 
             } catch (err) {
@@ -68,20 +74,27 @@ const App = () => {
     const handleSaveSecret = (e) => {
         if (e.key === 'Enter') {
             const val = e.target.value.trim();
-            localStorage.setItem('shasecret', val);
-            setSecret(val);
+            if (api?.storage?.local) {
+                api.storage.local.set({ 'shasecret': val }, () => {
+                    setSecret(val);
+                    console.log("Secret stored");
+                });
+            }
             e.target.value = '';
+        }
+    };
+
+    const resetSecret = () => {
+        if (api?.storage?.local) {
+            api.storage.local.remove(['shasecret'], () => {
+                setSecret('');
+                setToken('000000');
+            });
         }
     };
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(token);
-    };
-
-    const resetSecret = () => {
-        localStorage.removeItem('shasecret');
-        setSecret('');
-        setToken('000000');
     };
 
     return (
