@@ -5,5 +5,5 @@
         "@/*": ["src/*"]
       }
     },
-    "include": ["src", "public/scripts/background.js", "public/scripts/content.js"]
+    "include": ["src", "src/background.js", "src/content.js"]
   }

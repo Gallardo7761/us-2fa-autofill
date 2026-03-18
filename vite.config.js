@@ -6,24 +6,26 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      input: [
-        resolve(__dirname, 'index.html'),
-      ],
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        content: resolve(__dirname, 'src/content.js'),
+        background: resolve(__dirname, 'src/background.js'),
+      },
       output: {
+        format: 'es',
         entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'content' || chunkInfo.name === 'background') {
+            return 'scripts/[name].js';
+          }
           return 'assets/[name]-[hash].js';
         },
+        manualChunks: undefined,
       },
     },
   },
-  server: {
-    port: 3000,
-  },
   resolve: {
     alias: {
-      '@/': '/src/',
+      '@': resolve(__dirname, './src'),
     },
   },
-  publicDir: 'public',
 });
-

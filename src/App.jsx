@@ -48,6 +48,8 @@ const App = () => {
                             }).catch(() => {});
                         }
                     });
+                } else {
+                    console.debug("DevEnv");
                 }
 
             } catch (err) {
