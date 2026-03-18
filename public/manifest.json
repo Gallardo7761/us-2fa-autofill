@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "US 2FA Autofill",
-  "version": "4.0",
+  "version": "4.1",
   "description": "Rellena automáticamente el código 2FA en la Universidad de Sevilla.",
   "permissions": [
     "storage"
